@@ -5,16 +5,15 @@ const ApplicationForm = ({ isOpen, onClose, selectedProgram }) => {
     fullName: '',
     email: '',
     phone: '',
-    program: '',
-    qualification: '',
-    yearOfPassing: '',
-    message: ''
+    country: '',
+    state: '',
+    course: ''
   });
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const programs = [
+  const courses = [
     'Master of Business Administration',
     'Master of Computer Applications',
     'Master of Arts in Economics',
@@ -25,16 +24,16 @@ const ApplicationForm = ({ isOpen, onClose, selectedProgram }) => {
     'Other'
   ];
 
-  // Update program field when selectedProgram changes
+  // Update course field when selectedProgram changes
   useEffect(() => {
     if (isOpen && selectedProgram?.title) {
       // Defer state update to avoid synchronous setState in effect
       queueMicrotask(() => {
         setFormData(prev => {
-          if (prev.program !== selectedProgram.title) {
+          if (prev.course !== selectedProgram.title) {
             return {
               ...prev,
-              program: selectedProgram.title
+              course: selectedProgram.title
             };
           }
           return prev;
@@ -47,10 +46,9 @@ const ApplicationForm = ({ isOpen, onClose, selectedProgram }) => {
           fullName: '',
           email: '',
           phone: '',
-          program: '',
-          qualification: '',
-          yearOfPassing: '',
-          message: ''
+          country: '',
+          state: '',
+          course: ''
         });
         setErrors({});
       });
@@ -93,16 +91,16 @@ const ApplicationForm = ({ isOpen, onClose, selectedProgram }) => {
       newErrors.phone = 'Please enter a valid 10-digit phone number';
     }
 
-    if (!formData.program) {
-      newErrors.program = 'Please select a program';
+    if (!formData.country.trim()) {
+      newErrors.country = 'Country is required';
     }
 
-    if (!formData.qualification.trim()) {
-      newErrors.qualification = 'Qualification is required';
+    if (!formData.state.trim()) {
+      newErrors.state = 'State is required';
     }
 
-    if (!formData.yearOfPassing) {
-      newErrors.yearOfPassing = 'Year of passing is required';
+    if (!formData.course) {
+      newErrors.course = 'Please select a course';
     }
 
     setErrors(newErrors);
@@ -133,10 +131,9 @@ const ApplicationForm = ({ isOpen, onClose, selectedProgram }) => {
       fullName: '',
       email: '',
       phone: '',
-      program: '',
-      qualification: '',
-      yearOfPassing: '',
-      message: ''
+      country: '',
+      state: '',
+      course: ''
     });
     setErrors({});
     setIsSubmitting(false);
@@ -150,8 +147,9 @@ const ApplicationForm = ({ isOpen, onClose, selectedProgram }) => {
       <div className="form-modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="form-modal-header">
           <div className="form-modal-title">
-            <h2>Apply Now</h2>
-            <p>No spam. No hidden fees.</p>
+            <h2>Avail No Cost EMI's</h2>
+            <p>Speak to an admission counsellor</p>
+            <p>Online Exam | 100% Placement Assistance</p>
           </div>
           <button className="form-close-btn" onClick={handleClose} aria-label="Close form">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -205,62 +203,48 @@ const ApplicationForm = ({ isOpen, onClose, selectedProgram }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="program">Program <span className="required">*</span></label>
-            <select
-              id="program"
-              name="program"
-              value={formData.program}
-              onChange={handleChange}
-              className={errors.program ? 'error' : ''}
-            >
-              <option value="">Select a program</option>
-              {programs.map((program, index) => (
-                <option key={index} value={program}>{program}</option>
-              ))}
-            </select>
-            {errors.program && <span className="error-message">{errors.program}</span>}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="qualification">Highest Qualification <span className="required">*</span></label>
+            <label htmlFor="country">Country <span className="required">*</span></label>
             <input
               type="text"
-              id="qualification"
-              name="qualification"
-              value={formData.qualification}
+              id="country"
+              name="country"
+              value={formData.country}
               onChange={handleChange}
-              className={errors.qualification ? 'error' : ''}
-              placeholder="e.g., 12th, Bachelor's"
+              className={errors.country ? 'error' : ''}
+              placeholder="Enter your country"
             />
-            {errors.qualification && <span className="error-message">{errors.qualification}</span>}
+            {errors.country && <span className="error-message">{errors.country}</span>}
           </div>
 
           <div className="form-group">
-            <label htmlFor="yearOfPassing">Year of Passing <span className="required">*</span></label>
+            <label htmlFor="state">State <span className="required">*</span></label>
             <input
-              type="number"
-              id="yearOfPassing"
-              name="yearOfPassing"
-              value={formData.yearOfPassing}
+              type="text"
+              id="state"
+              name="state"
+              value={formData.state}
               onChange={handleChange}
-              className={errors.yearOfPassing ? 'error' : ''}
-              placeholder="e.g., 2024"
-              min="1980"
-              max="2030"
+              className={errors.state ? 'error' : ''}
+              placeholder="Enter your state"
             />
-            {errors.yearOfPassing && <span className="error-message">{errors.yearOfPassing}</span>}
+            {errors.state && <span className="error-message">{errors.state}</span>}
           </div>
 
           <div className="form-group">
-            <label htmlFor="message">Additional Message (Optional)</label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
+            <label htmlFor="course">Course <span className="required">*</span></label>
+            <select
+              id="course"
+              name="course"
+              value={formData.course}
               onChange={handleChange}
-              rows="3"
-              placeholder="Tell us more about your interests or questions..."
-            ></textarea>
+              className={errors.course ? 'error' : ''}
+            >
+              <option value="">Select a course</option>
+              {courses.map((course, index) => (
+                <option key={index} value={course}>{course}</option>
+              ))}
+            </select>
+            {errors.course && <span className="error-message">{errors.course}</span>}
           </div>
 
           <div className="form-actions">

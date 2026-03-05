@@ -16,7 +16,7 @@ const HeroBanner = ({ onApplyClick }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
-    }, 5000);
+    }, 6500);
     return () => clearInterval(interval);
   }, []);
 
